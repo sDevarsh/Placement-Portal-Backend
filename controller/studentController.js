@@ -82,6 +82,14 @@ const StudentController = {
       res.status(500).json({ error: error.message });
     }
   },
+  updateStudentById: async (req, res) => {
+    try {
+      await Student.updateById(req.params.id, req.body);
+      res.status(200).json({ message: "Student updated successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 };
 
 export default StudentController;

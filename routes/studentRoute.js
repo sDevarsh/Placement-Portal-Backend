@@ -21,6 +21,6 @@ studentRoute.delete(
   StudentController.deleteStudentByRollNumber
 );
 
-studentRoute.put("/updateStudentById/:id");
+studentRoute.put("/updateStudentById/:id", StudentController.updateStudentById);
 
 export default studentRoute;

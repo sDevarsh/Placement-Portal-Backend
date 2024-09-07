@@ -1,7 +1,7 @@
 import db from "../databaseConnect.js";
 
 const Company = {
-  getAllCompanies: async () => {
+  getAll: async () => {
     try {
       const [companies] = await db.query("SELECT * FROM company");
       return companies.length ? companies : null;
@@ -11,9 +11,12 @@ const Company = {
     }
   },
 
-  getCompanyById: async (id) => {
+  getById: async (id) => {
     try {
-      const [company] = await db.query("SELECT * FROM company WHERE company_id = ?", [id]);
+      const [company] = await db.query(
+        "SELECT * FROM company WHERE company_id = ?",
+        [id]
+      );
       return company.length ? company[0] : null;
     } catch (error) {
       console.error("Error fetching company by ID:", error);
@@ -54,7 +57,10 @@ const Company = {
 
   deleteById: async (id) => {
     try {
-      const result = await db.query("DELETE FROM company WHERE company_id = ?", [id]);
+      const result = await db.query(
+        "DELETE FROM company WHERE company_id = ?",
+        [id]
+      );
       return result;
     } catch (error) {
       console.error("Error deleting company by ID:", error);

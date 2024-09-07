@@ -1,7 +1,7 @@
 import db from "../databaseConnect.js";
 
 const Department = {
-  getAllDepartments: async () => {
+  getAll: async () => {
     try {
       const [departments] = await db.query("SELECT * FROM department");
       return departments.length ? departments : null;
@@ -11,9 +11,12 @@ const Department = {
     }
   },
 
-  getDepartmentById: async (id) => {
+  getById: async (id) => {
     try {
-      const [department] = await db.query("SELECT * FROM department WHERE dep_id = ?", [id]);
+      const [department] = await db.query(
+        "SELECT * FROM department WHERE dep_id = ?",
+        [id]
+      );
       return department.length ? department[0] : null;
     } catch (error) {
       console.error("Error fetching department by ID:", error);
@@ -52,7 +55,9 @@ const Department = {
 
   deleteById: async (id) => {
     try {
-      const result = await db.query("DELETE FROM department WHERE dep_id = ?", [id]);
+      const result = await db.query("DELETE FROM department WHERE dep_id = ?", [
+        id,
+      ]);
       return result;
     } catch (error) {
       console.error("Error deleting department by ID:", error);

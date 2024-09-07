@@ -80,6 +80,86 @@ const Student = {
       return { error: err.message };
     }
   },
+  updateById: async (id, data) => {
+    try {
+      const query = `
+        UPDATE student
+SET 
+    name = ?, 
+    rollNumber = ?, 
+    school_id = ?, 
+    dep_id = ?, 
+    year_of_study = ?, 
+    personal_email = ?, 
+    college_email = ?, 
+    phone_number = ?, 
+    date_of_birth = ?, 
+    gender = ?, 
+    city = ?, 
+    state = ?, 
+    tenth_percentage = ?, 
+    twelfth_percentage = ?, 
+    diploma_percentage = ?, 
+    cpi_after_7th_sem = ?, 
+    cpi_after_8th_sem = ?, 
+    remark = ?, 
+    category = ?, 
+    first_sem_spi = ?, 
+    second_sem_spi = ?, 
+    third_sem_spi = ?, 
+    fourth_fifth_sem_spi = ?, 
+    sixth_sem_spi = ?, 
+    seventh_sem_spi = ?, 
+    eighth_sem_spi = ?, 
+    no_of_backlog = ?, 
+    no_of_active_backlog = ?, 
+    optout = ?
+WHERE student_id = ?
+
+      `;
+      const dateOfBirth = new Date(data.date_of_birth)
+        .toISOString()
+        .split("T")[0];
+      const values = [
+        data.name,
+        data.rollNumber,
+        data.school_id,
+        data.dep_id,
+        data.year_of_study,
+        data.personal_email,
+        data.college_email,
+        data.phone_number,
+        dateOfBirth,
+        data.gender,
+        data.city,
+        data.state,
+        data.tenth_percentage,
+        data.twelfth_percentage,
+        data.diploma_percentage,
+        data.cpi_after_7th_sem,
+        data.cpi_after_8th_sem,
+        data.remark,
+        data.category,
+        data.first_sem_spi,
+        data.second_sem_spi,
+        data.third_sem_spi,
+        data.fourth_fifth_sem_spi,
+        data.sixth_sem_spi,
+        data.seventh_sem_spi,
+        data.eighth_sem_spi,
+        data.no_of_backlog,
+        data.no_of_active_backlog,
+        data.optout,
+        id,
+      ];
+
+      const [result] = await db.query(query, values);
+      return result;
+    } catch (error) {
+      console.error("Error updating department by ID:", error);
+      return { error: error.message };
+    }
+  },
   deleteById: async (id) => {
     try {
       const res = await db.query("delete from student where student_id=?", [

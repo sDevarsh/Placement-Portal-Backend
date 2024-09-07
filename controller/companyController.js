@@ -13,7 +13,8 @@ const CompanyController = {
   getCompanyById: async (req, res) => {
     try {
       const company = await Company.getById(req.params.id);
-      if (!company) return res.status(404).json({ message: "Company not found" });
+      if (!company)
+        return res.status(404).json({ message: "Company not found" });
       res.status(200).json(company);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -22,8 +23,14 @@ const CompanyController = {
 
   insertNewCompany: async (req, res) => {
     try {
-      const { company_name, email, phone_number, no_of_student_placed } = req.body;
-      await Company.insert({ company_name, email, phone_number, no_of_student_placed });
+      const { company_name, email, phone_number, no_of_student_placed } =
+        req.body;
+      await Company.insert({
+        company_name,
+        email,
+        phone_number,
+        no_of_student_placed,
+      });
       res.status(201).json({ message: "Company added successfully" });
     } catch (error) {
       res.status(500).json({ error: error.message });

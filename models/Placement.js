@@ -1,7 +1,7 @@
 import db from "../databaseConnect.js";
 
 const Placement = {
-  getAllPlacements: async () => {
+  getAll: async () => {
     try {
       const [placements] = await db.query("SELECT * FROM placement");
       return placements.length ? placements : null;
@@ -11,9 +11,12 @@ const Placement = {
     }
   },
 
-  getPlacementById: async (id) => {
+  getById: async (id) => {
     try {
-      const [placement] = await db.query("SELECT * FROM placement WHERE placement_id = ?", [id]);
+      const [placement] = await db.query(
+        "SELECT * FROM placement WHERE placement_id = ?",
+        [id]
+      );
       return placement.length ? placement[0] : null;
     } catch (error) {
       console.error("Error fetching placement by ID:", error);
@@ -22,9 +25,15 @@ const Placement = {
   },
 
   insert: async (data) => {
-    if (!data.company_id || !data.student_id || !data.position || !data.package) {
+    if (
+      !data.company_id ||
+      !data.student_id ||
+      !data.position ||
+      !data.package
+    ) {
       return {
-        error: "company_id, student_id, position, and package fields cannot be NULL.",
+        error:
+          "company_id, student_id, position, and package fields cannot be NULL.",
       };
     }
 
@@ -33,13 +42,15 @@ const Placement = {
         company_id, student_id, position, package, placement_date, location
       ) VALUES (?, ?, ?, ?, ?, ?)
     `;
-
+    const placement_date = new Date(data.placement_date)
+      .toISOString()
+      .split("T")[0];
     const values = [
       data.company_id,
       data.student_id,
       data.position,
       data.package,
-      data.placement_date,
+      placement_date,
       data.location,
     ];
 
@@ -54,7 +65,10 @@ const Placement = {
 
   deleteById: async (id) => {
     try {
-      const result = await db.query("DELETE FROM placement WHERE placement_id = ?", [id]);
+      const result = await db.query(
+        "DELETE FROM placement WHERE placement_id = ?",
+        [id]
+      );
       return result;
     } catch (error) {
       console.error("Error deleting placement by ID:", error);
