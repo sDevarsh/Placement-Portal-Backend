@@ -8,7 +8,7 @@ const AdminController = {
   signup: async (req, res) => {
     try {
       const { email, password } = req.body;
-
+      console.log(email, password);
       const existingEmail = await Admin.getAdmin(email);
       if (existingEmail) {
         return res.status(400).json({
