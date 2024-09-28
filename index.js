@@ -13,6 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/", AdminController.signup);
 app.post("/login", AdminController.login);
 app.use("/api", authmiddleware, routes);
-app.listen(port, () => {
+app.listen(port, () =>  {
   console.log("Server listening on port " + port);
 });
