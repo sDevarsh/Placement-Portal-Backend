@@ -1,6 +1,6 @@
 import db from "../databaseConnect.js";
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 const Admin = {
   getAdmin: async (email) => {
     const result = await db.query("select * from admin where email=?", email);
