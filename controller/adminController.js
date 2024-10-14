@@ -8,7 +8,7 @@ const AdminController = {
   signup: async (req, res) => {
     try {
       const { email, password } = req.body;
-      console.log(email, password);
+
       const existingEmail = await Admin.getAdmin(email);
       if (existingEmail) {
         return res.status(400).json({
@@ -37,15 +37,13 @@ const AdminController = {
     try {
       const { email, password } = req.body;
       const user = await Admin.getAdmin(email);
-      console.log(user);
+
       if (!user || !(await bcrypt.compare(password, user.password))) {
         return res.status(400).json({ message: "Invalid email or password" });
       }
-      const token = jwt.sign(
-        { id: user.id, role: user.role },
-        process.env.secret_key,
-        { expiresIn: "1h" }
-      );
+      const token = jwt.sign({ id: user.id }, process.env.secret_key, {
+        expiresIn: "1h",
+      });
       res.status(200).json({ message: "Login successful", token });
     } catch (error) {
       res.status(500).json({ error: error.message });

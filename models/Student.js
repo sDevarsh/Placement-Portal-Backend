@@ -28,17 +28,22 @@ const Student = {
     if (!data.dep_id || !data.school_id || !data.rollNumber || !data.name) {
       return {
         error:
-          "dep_id,school_id,rollNumber,name any of this fields cannot be NULL.",
+          "dep_id, school_id, rollNumber, name - any of these fields cannot be NULL.",
       };
     }
 
+    // Convert date_of_birth to 'YYYY-MM-DD' format if provided, otherwise use null
+    const dateOfBirth = (await data.date_of_birth)
+      ? new Date(data.date_of_birth).toISOString().split("T")[0]
+      : null;
+
     const query = `
-    INSERT INTO student (
+      INSERT INTO student (
         name, rollNumber, school_id, dep_id, year_of_study, personal_email, college_email, phone_number, date_of_birth, gender, city, state, 
         tenth_percentage, twelfth_percentage, diploma_percentage, cpi_after_7th_sem, cpi_after_8th_sem, remark, category, first_sem_spi, 
         second_sem_spi, third_sem_spi, fourth_fifth_sem_spi, sixth_sem_spi, seventh_sem_spi, eighth_sem_spi, no_of_backlog, no_of_active_backlog, optout
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-`;
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
 
     const values = [
       data.name,
@@ -49,7 +54,7 @@ const Student = {
       data.personal_email,
       data.college_email,
       data.phone_number,
-      data.date_of_birth,
+      dateOfBirth, // Ensure the date is in YYYY-MM-DD format
       data.gender,
       data.city,
       data.state,
@@ -80,6 +85,7 @@ const Student = {
       return { error: err.message };
     }
   },
+
   updateById: async (id, data) => {
     try {
       const query = `
