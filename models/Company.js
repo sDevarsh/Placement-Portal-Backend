@@ -25,25 +25,23 @@ const Company = {
   },
 
   insert: async (data) => {
-    if (!data.name || !data.location) {
+    if (!data.company_name || !data.email) {
       return {
-        error: "Company name and location fields cannot be NULL.",
+        error: "Company name and email fields cannot be NULL.",
       };
     }
 
     const query = `
       INSERT INTO company (
-        name, location, industry, description, website, contact_email
-      ) VALUES (?, ?, ?, ?, ?, ?)
+        company_name, email, phone_number, no_of_student_placed
+      ) VALUES (?, ?, ?, ?)
     `;
 
     const values = [
-      data.name,
-      data.location,
-      data.industry || null,
-      data.description || null,
-      data.website || null,
-      data.contact_email || null,
+      data.company_name,
+      data.email,
+      data.no_of_student_placed || null,
+      data.phone_number || null,
     ];
 
     try {
@@ -70,19 +68,22 @@ const Company = {
 
   updateById: async (id, data) => {
     try {
+      if (!data.company_name || !data.email) {
+        return {
+          error: "Company name and email fields cannot be NULL.",
+        };
+      }
       const query = `
         UPDATE company
-        SET name = ?, location = ?, industry = ?, description = ?, website = ?, contact_email = ?
+        SET company_name = ?, email = ?, no_of_student_placed = ?, phone_number = ?
         WHERE company_id = ?
       `;
 
       const values = [
-        data.name,
-        data.location,
-        data.industry || null,
-        data.description || null,
-        data.website || null,
-        data.contact_email || null,
+        data.company_name,
+        data.email,
+        data.no_of_student_placed || null,
+        data.phone_number || null,
         id,
       ];
 
