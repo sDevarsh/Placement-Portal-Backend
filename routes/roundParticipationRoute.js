@@ -4,23 +4,23 @@ import RoundParticipationController from "../controller/roundParticipationContro
 const roundParticipationRoute = new Router();
 
 roundParticipationRoute.post(
-  "/round_participation",
+  "/insert",
   RoundParticipationController.insertParticipation
 );
 roundParticipationRoute.get(
-  "/round_participation",
+  "/getAll",
   RoundParticipationController.getAllParticipations
 );
 roundParticipationRoute.get(
-  "/round_participation/round/:round_id",
+  "/getStudentsIdByRoundId/:round_id",
   RoundParticipationController.getParticipationsByRoundId
 );
 roundParticipationRoute.delete(
-  "/round_participation/:participation_id",
+  "/delete/:participation_id",
   RoundParticipationController.deleteParticipationById
 );
 roundParticipationRoute.get(
-  "/round_participation/round/:round_id",
+  "/getStudentsByRoundId/:round_id",
   RoundParticipationController.getStudentsByRoundId
 );
 export default roundParticipationRoute;

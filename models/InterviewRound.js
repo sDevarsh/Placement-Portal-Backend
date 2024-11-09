@@ -3,14 +3,18 @@ import db from "../databaseConnect.js";
 const InterviewRound = {
   insert: async (data) => {
     const query = `
-      INSERT INTO interview_round (company_id, round_number, round_type, round_date, description)
-      VALUES (?, ?, ?, ?, ?)
+      INSERT INTO interview_round (company_id,
+      round_name, round_number, round_type, round_date, description)
+      VALUES (?, ?, ?, ?, ?, ?)
     `;
+    const round_date = new Date(data.round_date).toISOString().split("T")[0];
     const values = [
       data.company_id,
+
+      data.round_name,
       data.round_number,
       data.round_type,
-      data.round_date,
+      round_date,
       data.description,
     ];
 
@@ -56,14 +60,16 @@ const InterviewRound = {
   updateById: async (round_id, data) => {
     const query = `
       UPDATE interview_round SET
-        company_id = ?, round_number = ?, round_type = ?, round_date = ?, description = ?
+        company_id = ?,round_name=?, round_number = ?, round_type = ?, round_date = ?, description = ?
       WHERE round_id = ?
     `;
+    const round_date = new Date(data.round_date).toISOString().split("T")[0];
     const values = [
       data.company_id,
+      data.round_name,
       data.round_number,
       data.round_type,
-      data.round_date,
+      round_date,
       data.description,
       round_id,
     ];
