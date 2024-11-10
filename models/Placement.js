@@ -39,7 +39,7 @@ const Placement = {
 
     const query = `
       INSERT INTO placement (
-        company_id, student_id, position, package, placement_date, location,salary ,offer_type, offer_letter, core_non_core
+        company_id, student_id, position,  placement_date, location,salary ,offer_type, offer_letter, core_non_core
       ) VALUES (?, ?, ?, ?, ?, ?)
     `;
     const placement_date = new Date(data.placement_date)
@@ -49,7 +49,6 @@ const Placement = {
       data.company_id,
       data.student_id,
       data.position,
-      data.package,
       placement_date,
       data.location,
       data.salary,
@@ -85,7 +84,7 @@ const Placement = {
     try {
       const query = `
         UPDATE placement
-        SET company_id = ?, student_id = ?, position = ?, package = ?, placement_date = ?, location = ?, salary = ?,offer_type	=?, offer_letter=?, core_non_core=?
+        SET company_id = ?, student_id = ?, position = ?, placement_date = ?, location = ?, salary = ?,offer_type	=?, offer_letter=?, core_non_core=?
 	
         WHERE placement_id = ?
       `;
@@ -96,7 +95,6 @@ const Placement = {
         data.company_id,
         data.student_id,
         data.position,
-        data.package,
         placement_date,
         data.location,
         data.salary,
