@@ -13,7 +13,8 @@ const PlacementController = {
   getPlacementById: async (req, res) => {
     try {
       const placement = await Placement.getById(req.params.id);
-      if (!placement) return res.status(404).json({ message: "Placement not found" });
+      if (!placement)
+        return res.status(404).json({ message: "Placement not found" });
       res.status(200).json(placement);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -22,8 +23,32 @@ const PlacementController = {
 
   insertNewPlacement: async (req, res) => {
     try {
-      const { student_id, company_id, position, location, salary, placement_date, offer_type, offer_letter, core_non_core } = req.body;
-      await Placement.insert({ student_id, company_id, position, location, salary, placement_date, offer_type, offer_letter, core_non_core });
+      const {
+        student_id,
+        company_id,
+        position,
+        location,
+        salary,
+        placement_date,
+        offer_type,
+        offer_letter,
+        core_non_core,
+      } = await req.body;
+
+      let obj = {
+        student_id,
+        company_id,
+        position,
+        location,
+        salary,
+        placement_date,
+        offer_type,
+        offer_letter,
+        core_non_core,
+      };
+      console.log(obj);
+      await Placement.insert(obj);
+
       res.status(201).json({ message: "Placement added successfully" });
     } catch (error) {
       res.status(500).json({ error: error.message });

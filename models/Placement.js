@@ -25,28 +25,23 @@ const Placement = {
   },
 
   insert: async (data) => {
-    if (
-      !data.company_id ||
-      !data.student_id ||
-      !data.position ||
-      !data.package
-    ) {
+    // console.log(company_id);
+    if (!data.company_id || !data.student_id || !data.position) {
       return {
         error:
           "company_id, student_id, position, and package fields cannot be NULL.",
       };
     }
-
     const query = `
       INSERT INTO placement (
         company_id, student_id, position,  placement_date, location,salary ,offer_type, offer_letter, core_non_core
-      ) VALUES (?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?,?,?,?)
     `;
     const placement_date = new Date(data.placement_date)
       .toISOString()
       .split("T")[0];
     const values = [
-      data.company_id,
+      parseInt(data.company_id),
       data.student_id,
       data.position,
       placement_date,
@@ -55,7 +50,6 @@ const Placement = {
       data.offer_type,
       data.offer_letter,
       data.core_non_core,
-      id,
     ];
 
     try {
