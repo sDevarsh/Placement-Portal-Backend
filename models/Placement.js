@@ -23,6 +23,18 @@ const Placement = {
       return { error: error.message };
     }
   },
+  getByCompanyId: async (id) => {
+    try {
+      const [placement] = await db.query(
+        "SELECT * FROM placement WHERE company_id = ?",
+        [id]
+      );
+      return placement.length ? placement[0] : null;
+    } catch (error) {
+      console.error("Error fetching placement by ID:", error);
+      return { error: error.message };
+    }
+  },
 
   insert: async (data) => {
     // console.log(company_id);

@@ -4,12 +4,26 @@ import PlacementController from "../controller/placementController.js";
 const placementRoute = new Router();
 
 placementRoute.get("/getAllPlacements", PlacementController.getAll);
-placementRoute.get("/getPlacementById/:id", PlacementController.getPlacementById);
+placementRoute.get(
+  "/getPlacementById/:id",
+  PlacementController.getPlacementById
+);
+
+placementRoute.get(
+  "/getPlacementByCompanyId/:id",
+  PlacementController.getPlacementByCompanyId
+);
 
 placementRoute.post("/insertPlacement", PlacementController.insertNewPlacement);
 
-placementRoute.delete("/deletePlacementById/:id", PlacementController.deletePlacementById);
+placementRoute.delete(
+  "/deletePlacementById/:id",
+  PlacementController.deletePlacementById
+);
 
-placementRoute.put("/updatePlacementById/:id", PlacementController.updatePlacementById);
+placementRoute.put(
+  "/updatePlacementById/:id",
+  PlacementController.updatePlacementById
+);
 
 export default placementRoute;

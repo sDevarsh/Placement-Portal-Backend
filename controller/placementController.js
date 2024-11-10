@@ -20,6 +20,16 @@ const PlacementController = {
       res.status(500).json({ error: error.message });
     }
   },
+  getPlacementByCompanyId: async (req, res) => {
+    try {
+      const placement = await Placement.getByCompanyId(req.params.id);
+      if (!placement)
+        return res.status(404).json({ message: "Placement not found" });
+      res.status(200).json(placement);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
 
   insertNewPlacement: async (req, res) => {
     try {
