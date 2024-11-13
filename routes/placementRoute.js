@@ -10,8 +10,27 @@ placementRoute.get(
 );
 
 placementRoute.get(
+  "/getStudentsPlacedYearOfStudyWise",
+  PlacementController.getStudentsPlacedYearOfStudyWise
+);
+
+placementRoute.get(
+  "/getPlacedDepartmentWise",
+  PlacementController.getStudentsPlacedDepartmentWise
+);
+placementRoute.get(
+  "/getCoreNonCorePlacements",
+  PlacementController.getCoreNonCorePlacements
+);
+
+placementRoute.get(
   "/getPlacementByCompanyId/:id",
   PlacementController.getPlacementByCompanyId
+);
+
+placementRoute.get(
+  "/getAllPlacementDetails",
+  PlacementController.getAllPlacementDetails
 );
 
 placementRoute.post("/insertPlacement", PlacementController.insertNewPlacement);

@@ -23,6 +23,84 @@ const Placement = {
       return { error: error.message };
     }
   },
+  getAllDetails: async () => {
+    const query = `
+      SELECT 
+        p.placement_id,
+        s.name AS student_name,
+        c.company_name,
+        p.position,
+        p.salary,
+        p.placement_date,
+        p.location,
+        p.core_non_core
+      FROM placement p
+      JOIN student s ON p.student_id = s.student_id
+      JOIN company c ON p.company_id = c.company_id
+    `;
+    try {
+      const [result] = await db.query(query);
+      return result.length ? result : null;
+    } catch (error) {
+      console.error("Error fetching all placement details:", error);
+      return { error: error.message };
+    }
+  },
+  getCoreNonCoreCount: async () => {
+    const query = `
+      SELECT 
+        core_non_core,
+        COUNT(*) AS count
+      FROM placement
+      GROUP BY core_non_core
+    `;
+    try {
+      const [result] = await db.query(query);
+      return result.length ? result : null;
+    } catch (error) {
+      console.error("Error fetching core/non-core placements:", error);
+      return { error: error.message };
+    }
+  },
+  getPlacedYearOfStudyWise: async () => {
+    const query = `
+      SELECT 
+        s.year_of_study AS year,
+        COUNT(p.student_id) AS placed_students
+      FROM placement p
+      JOIN student s ON p.student_id = s.student_id
+      GROUP BY s.year_of_study
+    `;
+    try {
+      const [result] = await db.query(query);
+      return result.length ? result : null;
+    } catch (error) {
+      console.error(
+        "Error fetching placed students year-of-study wise:",
+        error
+      );
+      return { error: error.message };
+    }
+  },
+  getPlacedDepartmentWise: async () => {
+    const query = `
+      SELECT 
+        d.dep_name AS department, 
+        COUNT(p.student_id) AS placed_students
+      FROM placement p
+      JOIN student s ON p.student_id = s.student_id
+      JOIN department d ON s.dep_id = d.dep_id
+      GROUP BY d.dep_id
+    `;
+    try {
+      const [result] = await db.query(query);
+      return result.length ? result : null;
+    } catch (error) {
+      console.error("Error fetching placed students department-wise:", error);
+      return { error: error.message };
+    }
+  },
+
   getByCompanyId: async (id) => {
     try {
       const [placement] = await db.query(

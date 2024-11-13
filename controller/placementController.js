@@ -20,6 +20,39 @@ const PlacementController = {
       res.status(500).json({ error: error.message });
     }
   },
+  getStudentsPlacedYearOfStudyWise: async (req, res) => {
+    try {
+      const result = await Placement.getPlacedYearOfStudyWise();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  getStudentsPlacedDepartmentWise: async (req, res) => {
+    try {
+      const result = await Placement.getPlacedDepartmentWise();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+
+  getAllPlacementDetails: async (req, res) => {
+    try {
+      const result = await Placement.getAllDetails();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  getCoreNonCorePlacements: async (req, res) => {
+    try {
+      const result = await Placement.getCoreNonCoreCount();
+      res.status(200).json(result);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
   getPlacementByCompanyId: async (req, res) => {
     try {
       const placement = await Placement.getByCompanyId(req.params.id);
